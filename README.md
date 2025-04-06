@@ -46,3 +46,21 @@ Build
 
 Enter rathena shell
 `$ docker exec -it rathena bash`
+
+## 🎮 Vibe Coding Story bRO
+
+1. Quando o projeto começou
+
+[![Quando o projeto começou](https://img.youtube.com/vi/duQ9_578RKw/hqdefault.jpg)](https://www.youtube.com/watch?v=duQ9_578RKw)
+
+2. Quando o Eden lagou
+
+[![Quando o Eden lagou](https://img.youtube.com/vi/f8OHybVhQwc/hqdefault.jpg)](https://www.youtube.com/watch?v=f8OHybVhQwc)
+
+3. Quando o primeiro membro engajou
+
+[![Quando o primeiro membro engajou](https://img.youtube.com/vi/vabnZ9-ex7o/hqdefault.jpg)](https://www.youtube.com/watch?v=vabnZ9-ex7o)
+
+4. Quando reportaram que a maioria dos mapas caiu
+
+[![Quando reportaram que a maioria dos mapas caiu](https://img.youtube.com/vi/cnCs9x_OFn0/hqdefault.jpg)](https://www.youtube.com/watch?v=cnCs9x_OFn0)

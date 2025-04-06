@@ -44,6 +44,9 @@ juntos, enfrentaremos o verdadeiro Satan Morroc: a entropia do esquecimento.
 Build
 `$ docker compose up --build`
 
+* just saying... the first time the server will fail because databasing is booting - don't worry - just rerun it
+** fixme: wait for db connection instead sleep to start application
+
 Enter rathena shell
 `$ docker exec -it rathena bash`
 
@@ -64,3 +67,12 @@ Enter rathena shell
 4. Quando reportaram que a maioria dos mapas caiu
 
 [![Quando reportaram que a maioria dos mapas caiu](https://img.youtube.com/vi/cnCs9x_OFn0/hqdefault.jpg)](https://www.youtube.com/watch?v=cnCs9x_OFn0)
+
+5. Quando os quatro servers subiram
+
+[![Quando os quatro servers subiram](https://img.youtube.com/vi/0J2QdDbelmY/hqdefault.jpg)](https://www.youtube.com/watch?v=0J2QdDbelmY)
+
+6. Quando começamos a trabalhar no Client
+
+[![Quando os quatro servers subiram](https://img.youtube.com/vi/v0XCCrt9EUU/hqdefault.jpg)](https://www.youtube.com/watch?v=v0XCCrt9EUU)
+

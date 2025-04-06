@@ -18,26 +18,30 @@ services:
     command: >
       bash -c "
         echo Esperando o banco subir... &&
-        sleep 2 &&
+        sleep 1 &&
         echo '---- CONFIG CHECK ----' &&
+        cat /opt/rathena/conf/inter_athena.conf &&
         echo '---- STARTING ----' &&
         cd /opt/rathena &&
         ./athena-start start &&
         tail -f /dev/null"
 
-# cat /opt/rathena/conf/inter_athena.conf &&
 
   mariadb:
     image: mariadb:10.5
     container_name: mariadb
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: ragnarok
       MYSQL_USER: ragnarok
       MYSQL_PASSWORD: ragnarok
+
     volumes:
       - db_data:/var/lib/mysql
+      - ./seeds:/docker-entrypoint-initdb.d
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

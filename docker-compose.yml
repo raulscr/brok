@@ -1,0 +1,56 @@
+services:
+  rathena:
+    build: .
+    container_name: rathena
+    depends_on:
+      - mariadb
+    ports:
+      - "5121:5121"
+      - "6121:6121"
+      - "6900:6900"
+    environment:
+      - DB_HOST=mariadb
+      - DB_USER=ragnarok
+      - DB_PASS=ragnarok
+      - DB_NAME=ragnarok
+    volumes:
+      - ./rathena-conf:/opt/rathena/conf
+    command: >
+      bash -c "
+        echo Esperando o banco subir... &&
+        sleep 2 &&
+        echo '---- CONFIG CHECK ----' &&
+        echo '---- STARTING ----' &&
+        cd /opt/rathena &&
+        ./athena-start start &&
+        tail -f /dev/null"
+
+# cat /opt/rathena/conf/inter_athena.conf &&
+
+  mariadb:
+    image: mariadb:10.5
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ragnarok
+      MYSQL_USER: ragnarok
+      MYSQL_PASSWORD: ragnarok
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  db_data:

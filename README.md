@@ -72,7 +72,6 @@ Enter rathena shell
 
 [![Quando os quatro servers subiram](https://img.youtube.com/vi/0J2QdDbelmY/hqdefault.jpg)](https://www.youtube.com/watch?v=0J2QdDbelmY)
 
-6. Quando começamos a trabalhar no Client
+6. Quando o Client subiu seco no nginx
 
-[![Quando os quatro servers subiram](https://img.youtube.com/vi/v0XCCrt9EUU/hqdefault.jpg)](https://www.youtube.com/watch?v=v0XCCrt9EUU)
-
+[![Quando o Client subiu seco no nginx](https://img.youtube.com/vi/G_sBOsh-vyI/hqdefault.jpg)](https://www.youtube.com/watch?v=G_sBOsh-vyI)

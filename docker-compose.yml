@@ -56,5 +56,15 @@ services:
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: root
 
+  ro-client:
+    build:
+      context: ./ro-client
+      dockerfile: Dockerfile
+    container_name: ro-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - rathena
+
 volumes:
   db_data:

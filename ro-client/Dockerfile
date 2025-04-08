@@ -46,7 +46,7 @@ ln -sf /dev/stderr /var/log/nginx/error.log
 echo "Iniciando nginx..."
 nginx &
 echo "Iniciando wsProxy..."
-node /app/wsProxy/index.js
+node /app/wsProxy/index.js -p 5999 -a rathena:6900,rathena:6121,rathena:5121
 EOF
 
 RUN chmod +x /app/start.sh

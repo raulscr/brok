@@ -16,7 +16,7 @@ var ROConfig = {
 	servers: [{
 		display:     "[bROK] Sakray",
 		desc:        "Guardiões¨de¨Midgard",
-		address:     "127.0.0.1",
+		address:     "rathena",
 		port:        6900,
 		socketProxy: "ws://127.0.0.1:5999/",
 		// adminList:   [2000000]

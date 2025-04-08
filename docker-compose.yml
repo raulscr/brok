@@ -17,6 +17,8 @@ services:
       - ./rathena-conf:/opt/rathena/conf
     command: >
       bash -c "
+        echo Cleaning up stale PID files... &&
+        rm -f /opt/rathena/.login-server.pid /opt/rathena/.web-server.pid /opt/rathena/.map-server.pid /opt/rathena/.char-server.pid &&
         echo Esperando o banco subir... &&
         sleep 1 &&
         echo '---- CONFIG CHECK ----' &&

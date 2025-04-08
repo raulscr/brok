@@ -65,6 +65,7 @@ services:
     container_name: ro-client
     ports:
       - "3000:80"
+      - "5999:5999"
     depends_on:
       - rathena
 

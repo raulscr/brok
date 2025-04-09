@@ -13,6 +13,12 @@ services:
       - DB_USER=ragnarok
       - DB_PASS=ragnarok
       - DB_NAME=ragnarok
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     volumes:
       - ./rathena-conf:/opt/rathena/conf
     command: >

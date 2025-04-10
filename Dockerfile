@@ -1,31 +1,24 @@
 # Use Debian/Ubuntu base image
-FROM ubuntu:20.04
+FROM alpine:latest AS build
+ARG packetver
 
 # Informações básicas
 LABEL maintainer="Davi A. Wasserberg <davi.abreu.w@gmail.com>"
 LABEL description="Servidor rAthena emulador para Ragnarok Online baseado em Debian"
 
-# Variáveis de ambiente
-ENV DEBIAN_FRONTEND=noninteractive
-
 # Atualizar e instalar dependências
-RUN apt-get update && apt-get install -y \
-    build-essential \
+RUN apk update && apk add --no-cache \
+    build-base \
+    linux-headers \
     git \
     make \
-    libmariadbclient-dev \
-    libmariadb-dev \
-    libmariadbclient-dev-compat \
-    zlib1g-dev \
-    libpcre3-dev \
-    libssl-dev \
+    mariadb-dev \
+    zlib-dev \
+    pcre-dev \
+    openssl-dev \
     gcc \
     g++ \
-    cmake \
-    nano \
-    tmux \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+    cmake
 
 # Clonar rAthena
 RUN git clone https://github.com/rathena/rathena.git /opt/rathena
@@ -33,10 +26,28 @@ RUN git clone https://github.com/rathena/rathena.git /opt/rathena
 # Compilar o emulador
 WORKDIR /opt/rathena
 
-RUN ./configure && make clean && make server
+RUN ./configure --enable-packetver=${packetver} && make clean && make server
+
+FROM alpine:latest AS rathena
+
+# copy db and config files
+# we can use our own files instead of rathena project default
+COPY --from=build /opt/rathena/db /opt/rathena/
+COPY --from=build /opt/rathena/npc /opt/rathena/
+COPY --from=build /opt/rathena/conf /opt/rathena/
+
+# copy built binaries and startup scripts
+COPY --from=build /opt/rathena/function.sh /opt/rathena/function.sh
+COPY --from=build /opt/rathena/athena-start /opt/rathena/athena-start
+COPY --from=build /opt/rathena/login-server /opt/rathena/login-server
+COPY --from=build /opt/rathena/char-server /opt/rathena/char-server
+COPY --from=build /opt/rathena/map-server /opt/rathena/map-server
+COPY --from=build /opt/rathena/web-server /opt/rathena/web-server
+
+WORKDIR /opt/rathena
 
 # Porta padrão do emulador (modifique conforme necessário)
 EXPOSE 5121 6121 6900
 
 # Script de entrada (iniciar o emulador)
-CMD ["/opt/rathena/athena-start", "start"]
+CMD ["./athena-start", "start"]

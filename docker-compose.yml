@@ -23,6 +23,12 @@ services:
         sleep 1 &&
         echo '---- CONFIG CHECK ----' &&
         cat /opt/rathena/conf/inter_athena.conf &&
+        echo '---- CONFIG LOGIN CHECK ----' &&
+        cat /opt/rathena/conf/login_athena.conf &&
+        echo '---- CONFIG CHAR CHECK ----' &&
+        cat /opt/rathena/conf/char_athena.conf &&
+        echo '---- CONFIG MAP CHECK ----' &&
+        cat /opt/rathena/conf/map_athena.conf &&
         echo '---- STARTING ----' &&
         cd /opt/rathena &&
         ./athena-start start &&

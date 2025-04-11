@@ -12,7 +12,7 @@ var ROConfig = {
 	development:    true,
 	version:     25,
 	langtype:    12,
-	packetver:   20211103,
+	packetver:   20131223,
 	servers: [{
 		display:     "[bROK] Sakray",
 		desc:        "Guardiões¨de¨Midgard",

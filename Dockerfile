@@ -29,11 +29,18 @@ RUN apt-get update && apt-get install -y \
 
 # Clonar rAthena
 RUN git clone https://github.com/rathena/rathena.git /opt/rathena
+# COPY ./rathena /opt/rathena
+
+# Remove configurações legadas
+RUN rm -rf /opt/rathena/conf/*
+
+# Copia configurações locais
+COPY ./rathena-conf/ /opt/rathena/conf/
 
 # Compilar o emulador
 WORKDIR /opt/rathena
 
-RUN ./configure && make clean && make server
+RUN ./configure --enable-packetver=20131223 && make -j4 server
 
 # Porta padrão do emulador (modifique conforme necessário)
 EXPOSE 5121 6121 6900

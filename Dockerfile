@@ -1,46 +1,42 @@
 # Use Debian/Ubuntu base image
-FROM ubuntu:20.04
+FROM frolvlad/alpine-glibc:latest as build
 
 # Informações básicas
 LABEL maintainer="Davi A. Wasserberg <davi.abreu.w@gmail.com>"
 LABEL description="Servidor rAthena emulador para Ragnarok Online baseado em Debian"
 
-# Variáveis de ambiente
-ENV DEBIAN_FRONTEND=noninteractive
-
 # Atualizar e instalar dependências
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    make \
-    libmariadbclient-dev \
-    libmariadb-dev \
-    libmariadbclient-dev-compat \
-    zlib1g-dev \
-    libpcre3-dev \
-    libssl-dev \
-    gcc \
-    g++ \
-    cmake \
-    nano \
-    tmux \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache gcc g++ make cmake build-base linux-headers glibc libstdc++ libgcc zlib-dev mariadb-dev
 
 # Clonar rAthena
-RUN git clone https://github.com/rathena/rathena.git /opt/rathena
-# COPY ./rathena /opt/rathena
-
-# Remove configurações legadas
-RUN rm -rf /opt/rathena/conf/*
-
-# Copia configurações locais
-COPY ./rathena-conf/ /opt/rathena/conf/
+RUN git clone https://github.com/rathena/rathena.git /build/rathena
 
 # Compilar o emulador
-WORKDIR /opt/rathena
+WORKDIR /build/rathena
 
-RUN ./configure --enable-packetver=20131223 && make -j4 server
+RUN ./configure --enable-packetver=20131223
+# TODO: add cmake build, ccache and job (-jN)
+RUN make clean server
+
+FROM frolvlad/alpine-glibc:latest AS rathena
+
+RUN apk add --no-cache glibc libstdc++ libgcc zlib-dev mariadb-dev ca-certificates linux-headers procps
+
+# copy db and config files
+# we can use our own files instead of rathena project default
+COPY --from=build /build/rathena/db /opt/rathena/db
+COPY --from=build /build/rathena/npc /opt/rathena/npc
+COPY rathena-conf /opt/rathena/conf/
+
+# copy built binaries and startup scripts
+COPY --from=build /build/rathena/function.sh /opt/rathena/function.sh
+COPY --from=build /build/rathena/athena-start /opt/rathena/athena-start
+COPY --from=build /build/rathena/login-server /opt/rathena/login-server
+COPY --from=build /build/rathena/char-server /opt/rathena/char-server
+COPY --from=build /build/rathena/map-server /opt/rathena/map-server
+COPY --from=build /build/rathena/web-server /opt/rathena/web-server
+
+WORKDIR /opt/rathena
 
 # Porta padrão do emulador (modifique conforme necessário)
 EXPOSE 5121 6121 6900

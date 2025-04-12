@@ -46,4 +46,5 @@ RUN ./configure --enable-packetver=20131223 && make -j4 server
 EXPOSE 5121 6121 6900
 
 # Script de entrada (iniciar o emulador)
-CMD ["/opt/rathena/athena-start", "start"]
+ENTRYPOINT [ "./athena-start" ]
+CMD [ "watch" ]
